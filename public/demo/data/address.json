@@ -1,0 +1,20 @@
+{
+    "data": [
+        {"streetNumber": "123", "streetName": "Main Street", "suburb": "Margaret River", "postcode": "6185"},
+        {"streetNumber": "456", "streetName": "Oak Avenue", "suburb": "Cowaramup", "postcode": "6186"},
+        {"streetNumber": "789", "streetName": "Pine Road", "suburb": "Gracetown", "postcode": "6184"},
+        {"streetNumber": "987", "streetName": "Cedar Street", "suburb": "Witchcliffe", "postcode": "6183"},
+        {"streetNumber": "234", "streetName": "Elm Drive", "suburb": "Margaret River", "postcode": "6185"},
+        {"streetNumber": "567", "streetName": "Birch Lane", "suburb": "Cowaramup", "postcode": "6186"},
+        {"streetNumber": "890", "streetName": "Willow Court", "suburb": "Gracetown", "postcode": "6184"},
+        {"streetNumber": "876", "streetName": "Maple Avenue", "suburb": "Witchcliffe", "postcode": "6183"},
+        {"streetNumber": "543", "streetName": "Cypress Road", "suburb": "Margaret River", "postcode": "6185"},
+        {"streetNumber": "210", "streetName": "Palm Street", "suburb": "Cowaramup", "postcode": "6186"},
+        {"streetNumber": "987", "streetName": "Fir Road", "suburb": "Gracetown", "postcode": "6184"},
+        {"streetNumber": "654", "streetName": "Spruce Avenue", "suburb": "Witchcliffe", "postcode": "6183"},
+        {"streetNumber": "321", "streetName": "Juniper Drive", "suburb": "Margaret River", "postcode": "6185"},
+        {"streetNumber": "678", "streetName": "Chestnut Lane", "suburb": "Cowaramup", "postcode": "6186"},
+        {"streetNumber": "345", "streetName": "Poplar Court", "suburb": "Gracetown", "postcode": "6184"},
+        {"streetNumber": "876", "streetName": "Sycamore Avenue", "suburb": "Witchcliffe", "postcode": "6183"}
+    ]
+}
