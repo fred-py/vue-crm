@@ -1,9 +1,17 @@
 <script setup>
-import { onMounted, reactive, ref, watch } from 'vue';
+import { onMounted, onBeforeMount, reactive, ref, watch } from 'vue';
 import ProductService from '@/service/ProductService';  // js file tha fetches sample data from json file.
 import { useLayout } from '@/layout/composables/layout';
+import { useDataStore } from '@/stores/DataStore';  // Fetch api for cus
+import CustomerTable from '../components/CustomerTable.vue';
+
 
 const { isDarkTheme } = useLayout();
+
+
+
+const dataStore = useDataStore();
+
 
 const products = ref(null);
 const lineData = reactive({
@@ -46,9 +54,17 @@ onMounted(() => {
     productService.getProductsSmall().then((data) => (products.value = data));
 });
 
+
+//onBeforeMount(async () => {
+    // Mounts Data on Recent Sales element
+//    await customers.fetchCustomers();
+//    console.log(json);
+//});
+
 const formatCurrency = (value) => {
     return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 };
+
 const applyLightTheme = () => {
     lineOptions.value = {
         plugins: {
@@ -173,28 +189,19 @@ watch(
     
         <div class="col-12 xl:col-6">
             <div class="card">
+
+                <!-- NEW TABLE BELOW -->
                 <h5>Recent Sales</h5>
-                <DataTable :value="products" :rows="5" :paginator="true" responsiveLayout="scroll">
-                    <Column style="width: 15%">
-                        <template #header> Address </template>
-                        <template #body="slotProps">
-                            <img :src="'demo/data/address/' + slotProps.data.image" :alt="slotProps.data.image" width="50" class="shadow-2" />
-                        </template>
-                    </Column>
-                    <Column field="name" header="Name" :sortable="true" style="width: 35%"></Column>
-                    <Column field="price" header="Price" :sortable="true" style="width: 35%">
-                        <template #body="slotProps">
-                            {{ formatCurrency(slotProps.data.price) }}
-                        </template>
-                    </Column>
-                    <Column style="width: 15%">
-                        <template #header> View </template>
-                        <template #body>
-                            <Button icon="pi pi-search" type="button" class="p-button-text"></Button>
-                        </template>
-                    </Column>
-                </DataTable>
+                <ul class="sm:flex flex-wrap lg:flex-nowrap gap-5">
+                    <li v-for="customer in dataStore.customers" :key="customer.id" :customer="customer"></li>
+                </ul>
+
+
+
+                
             </div>
+
+            
             <div class="card">
                 <div class="flex justify-content-between align-items-center mb-5">
                     <h5>Best Selling Products</h5>
@@ -350,5 +357,29 @@ watch(
     </div>
 </template>
 
+
+<!-- <DataTable :value="customers" :rows="5" :paginator="true" responsiveLayout="scroll">
+                    <Column field="address" header="Address" :sortable="true" style="width: 15%">
+                        <template #body="slotProps">
+                            {{ slotProps.data.address.street}}
+                        </template>
+                    </Column>
+                    <Column field="postcode" header="Postcode" :sortable="true" style="width: 35%">
+                        <template #body="slotProps">
+                            {{ slotProps.data.address.postcode }}
+                        </template>
+                    </Column>
+                    <Column field="plan" header="Plan" :sortable="true" style="width: 35%">
+                        <template #body="slotProps">
+                            {{ slotProps.data.subscription }}
+                        </template>
+                    </Column>
+                    <Column style="width: 15%">
+                        <template #header> View </template>
+                        <template #body>
+                            <Button icon="pi pi-search" type="button" class="p-button-text"></Button>
+                        </template>
+                    </Column>
+                </DataTable>-->
 
 
