@@ -3,7 +3,9 @@ import { onMounted, onBeforeMount, reactive, ref, watch } from 'vue';
 import ProductService from '@/service/ProductService';  // js file tha fetches sample data from json file.
 import { useLayout } from '@/layout/composables/layout';
 import { useDataStore } from '@/stores/DataStore';  // Fetch api for cus
-import CustomerTable from '../components/CustomerTable.vue';
+import CustomerTable from '../components/CustomerTable.vue';  // Main cus data table component - does not go on the dashboard
+import RecentSalesTable from '../components/RecentSalesTable.vue';  // dashboard recent sales table component
+
 
 
 const { isDarkTheme } = useLayout();
@@ -55,11 +57,10 @@ onMounted(() => {
 });
 
 
-//onBeforeMount(async () => {
+onBeforeMount(async () => {
     // Mounts Data on Recent Sales element
-//    await customers.fetchCustomers();
-//    console.log(json);
-//});
+    await dataStore.fetchCustomers();
+});
 
 const formatCurrency = (value) => {
     return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
@@ -188,18 +189,14 @@ watch(
         </div>
     
         <div class="col-12 xl:col-6">
-            <div class="card">
+            
 
                 <!-- NEW TABLE BELOW -->
-                <h5>Recent Sales</h5>
-                <ul class="sm:flex flex-wrap lg:flex-nowrap gap-5">
-                    <li v-for="customer in dataStore.customers" :key="customer.id" :customer="customer"></li>
-                </ul>
-
-
-
                 
-            </div>
+                <div>
+                    <RecentSalesTable />
+                </div>
+        
 
             
             <div class="card">
