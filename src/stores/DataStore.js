@@ -14,6 +14,7 @@ export const useDataStore = defineStore('DataStore', {
     // State, defines data accessible by components
     state: () => ({
         customers: [],
+        totalOrders: 0,
     }),
     
     // Actions are methods that can be called from components
@@ -23,8 +24,14 @@ export const useDataStore = defineStore('DataStore', {
             // Fetch data from the server
             const response = await axios.get('https://wheeliewash3.2.sg-1.fl0.io/api/v1/customers/');
             // Set the data to the store
-            console.log(response.data);
             this.customers = response.data;
+        },
+        async fetchTotalOrders() {
+            // Fetch data from the server
+            const response = await axios.get('https://wheeliewash3.2.sg-1.fl0.io/api/v1/orders/');
+            // Set the data to the store
+            console.log(response.data);
+            this.totalOrders = response.data;
         },
     },
     // Getters are used to get data from the store
@@ -33,6 +40,9 @@ export const useDataStore = defineStore('DataStore', {
         // Get the number of customers
         getCustomer() {
             return this.customers;  // state.customers returns an array of customer objects
+        },
+        getTotalOrders() {
+            return this.totalOrders;
         },
     },
 });
