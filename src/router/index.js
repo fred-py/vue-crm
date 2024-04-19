@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Dashboard from '../views/Dashboard.vue'
 import AppLayout from '@/layout/AppLayout.vue'  // This is from PrimeVue Sakai template
+import ManageCustomers from '@/views/ManageCustomers.vue'
 
 
 const router = createRouter({
@@ -13,7 +14,12 @@ const router = createRouter({
         {
           path:'/',
           component: Dashboard,
-        }
+        },
+        {
+          path: '/manage/customers',
+          component: ManageCustomers,
+        },
+
       ]
     },
   ]
