@@ -13,6 +13,25 @@ onMounted(async () => {
 });
 
 const toast = useToast();
+const selectedCustomers = ref(null);
+const filters = ref({});
+
+const dt = ref(null);
+
+const initFilters = () => {
+    filters.value = {
+        global: { value: null, matchMode: FilterMatchMode.CONTAINS },  // Searches Name
+        address: { value: null, matchMode: FilterMatchMode.CONTAINS },
+        bin_collection: { value: null, matchMode: FilterMatchMode.CONTAINS },
+        subscription: { value: null, matchMode: FilterMatchMode.CONTAINS },
+        active: { value: null, matchMode: FilterMatchMode.CONTAINS },
+        phone: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    };
+}; 
+
+onBeforeMount(() => {
+    initFilters();
+});
 
 /*
 const products = ref(null);
@@ -20,9 +39,9 @@ const productDialog = ref(false);
 const deleteProductDialog = ref(false);
 const deleteProductsDialog = ref(false);
 const product = ref({});
-const selectedProducts = ref(null);
-const dt = ref(null);
-const filters = ref({});
+
+
+
 const submitted = ref(false);
 const statuses = ref([
     { label: 'INSTOCK', value: 'instock' },
@@ -47,9 +66,7 @@ const productService = new ProductService();
 
 
 /*
-onBeforeMount(() => {
-    initFilters();
-});
+
 
 onMounted(() => {
     productService.getProducts().then((data) => (products.value = data));
@@ -140,13 +157,10 @@ const deleteSelectedProducts = () => {
     selectedProducts.value = null;
     toast.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
 };
-
-const initFilters = () => {
-    filters.value = {
-        global: { value: null, matchMode: FilterMatchMode.CONTAINS }
-    };
-}; 
 */
+
+
+
 </script>
 
 <template>
@@ -169,26 +183,26 @@ const initFilters = () => {
                 <DataTable
                     ref="dt"
                     :value="dataStore.getCustomer.customers"
-                    v-model:selection="selectedProducts"
+                    v-model:selection="selectedCustomers"
                     dataKey="id"
                     :paginator="true"
                     :rows="10"
                     :filters="filters"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                    :rowsPerPageOptions="[5, 10, 25]"
+                    :rowsPerPageOptions="[5, 10, 25, 50, 100]"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
                 >
-                    <!--
+                    
                     <template #header>
                         <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-                            <h5 class="m-0">Manage Products</h5>
+                            <h5 class="m-0">Manage Customers</h5>
                             <IconField iconPosition="left" class="block mt-2 md:mt-0">
                                 <InputIcon class="pi pi-search" />
                                 <InputText class="w-full sm:w-auto" v-model="filters['global'].value" placeholder="Search..." />
                             </IconField>
                         </div>
                     </template>
-                    -->
+                    
 
                     <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
                     <Column field="address" header="Address" :sortable="true" headerStyle="width:14%; min-width:10rem;">
