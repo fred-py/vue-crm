@@ -26,6 +26,7 @@ import Sidebar from 'primevue/sidebar';
 import StyleClass from 'primevue/styleclass';
 import Toast from 'primevue/toast';
 import Tooltip from 'primevue/tooltip';
+import Toolbar from 'primevue/toolbar';
 
 import BlockViewer from '@/components/BlockViewer.vue';
 
@@ -63,6 +64,7 @@ app.component('Menu', Menu);
 app.component('SelectButton', SelectButton);
 app.component('Sidebar', Sidebar);
 app.component('Toast', Toast);
+app.component('Toolbar', Toolbar);
 
 
 app.mount('#app')

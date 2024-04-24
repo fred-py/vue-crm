@@ -16,6 +16,11 @@ const toast = useToast();
 const selectedCustomers = ref(null);
 const filters = ref({});
 
+
+const exportCSV = () => {
+    dt.value.exportCSV();
+};
+
 const dt = ref(null);
 
 const initFilters = () => {
@@ -144,9 +149,6 @@ const createId = () => {
     return id;
 };
 
-const exportCSV = () => {
-    dt.value.exportCSV();
-};
 
 const confirmDeleteSelected = () => {
     deleteProductsDialog.value = true;
