@@ -5,6 +5,7 @@ import ProductService from '@/service/ProductService';
 import { useToast } from 'primevue/usetoast';
 
 import { useDataStore } from '@/stores/DataStore';
+import InputText from 'primevue/inputtext';
 
 const toast = useToast();
 const dataStore = useDataStore();
@@ -308,7 +309,7 @@ const deleteSelectedProducts = () => {
                     </div>
                     <div class="field">
                         <label for="address">Address</label>
-                        <Textarea id="description" v-model="customer.address" required="true" rows="3" cols="20" />
+                        <InputText id="address" v-model="customer.address" required="true" rows="3" cols="20" />
                     </div>
 
                     <div class="field">
@@ -353,23 +354,23 @@ const deleteSelectedProducts = () => {
                     <div class="formgrid grid">
                         <div class="field col">
                             <label for="phone">Phone</label>
-                            <InputNumber id="phone" v-model="customer.phone" :invalid="submitted && !customer.phone" :required="true" />
+                            <InputText id="phone" v-model="customer.phone" :invalid="submitted && !customer.phone" :required="true" />
                             <small class="p-invalid" v-if="submitted && !customer.phone">Phone is required.</small>
                         </div>
                         <div class="field col">
                             <label for="email">Email</label>
-                            <InputNumber id="email" v-model="customer.email" integeronly />
+                            <InputText id="email" v-model="customer.email" integeronly />
                         </div>
                     </div>                  
                     <div class="formgrid grid">
                         <div class="field col">
                             <label for="amount_paid">Amount Paid</label>
-                            <InputNumber id="amount_paid" v-model="customer.amount_paid" mode="currency" currency="AUD" locale="en-AU" :invalid="submitted && !customer.amount_paid" :required="true" />
+                            <InputText id="amount_paid" v-model="customer.amount_paid" mode="currency" currency="AUD" locale="en-AU" :invalid="submitted && !customer.amount_paid" :required="true" />
                             <small class="p-invalid" v-if="submitted && !customer.amount_paid">Amount paid is required.</small>
                         </div>
                         <div class="field col">
                             <label for="subscription">Subscription</label>
-                            <InputNumber id="subscription" v-model="customer.subscription" integeronly />
+                            <InputText id="subscription" v-model="customer.subscription" integeronly />
                         </div>
                     </div>
 
