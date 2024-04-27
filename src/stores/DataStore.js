@@ -33,6 +33,10 @@ export const useDataStore = defineStore('DataStore', {
             console.log(response.data);
             this.totalOrders = response.data;
         },
+        async viewInvoice(url) {          // window.open is a built-in JS function that opens a new browser window
+            window.open(url, '_blank');  // _blank opens the link in a new tab
+        },
+
     },
     // Getters are used to get data from the store
 

@@ -9,23 +9,15 @@ import InputText from 'primevue/inputtext';
 
 const toast = useToast();
 const dataStore = useDataStore();
-const customer = ref([]);  // Initialse customer as a reative reference
-const  customers = ref([]);
+const customer = ref([]);  // Initialse customer as a reactive reference
+const customers = ref([]);
 const selectedCustomers = ref(null);
 const filters = ref({});
 const customerDialog = ref(false);
 const deleteCustomerDialog = ref(false);
 const deleteCustomersDialog = ref(false);
 const submitted = ref(false);
-const statuses = ref([
-    { label: 'MONDAY', value: 'monday' },
-    { label: 'TUESDAY', value: 'tuesday' },
-    { label: 'WEDNESDAY', value: 'wednesday' },
-    { label: 'THURSDAY', value: 'thursday' },
-    { label: 'FRIDAY', value: 'friday' },
-    { label: 'SATURDAY', value: 'saturday' },
-    { label: 'SUNDAY', value: 'sunday' },
-]);
+
 
 
 
@@ -33,7 +25,6 @@ onMounted(async () => {
     await dataStore.fetchCustomers();
     customer.value = dataStore.getCustomer.customers;  // Update customer constant after fetching data
 });
-
 
 const exportCSV = () => {
     dt.value.exportCSV();
@@ -86,6 +77,7 @@ const findIndexById = (id) => {
     }
     return index;
 };
+
 /*
 const products = ref(null);
 const productDialog = ref(false);
@@ -98,18 +90,7 @@ const product = ref({});
 
 const productService = new ProductService();
 */
-//const getBadgeSeverity = (inventoryStatus) => {
- //   switch (inventoryStatus.toLowerCase()) {
-   //     case 'instock':
-     //       return 'success';
-       // case 'lowstock':
-         //   return 'warning';
-       // case 'outofstock':
-         //   return 'danger';
-        //default:
-         //   return 'info';
-   // }
-//};
+
 
 
 /*
@@ -154,10 +135,6 @@ const saveProduct = () => {
     }
 };
 
-const editProduct = (editProduct) => {
-    product.value = { ...editProduct };
-    productDialog.value = true;
-};
 
 const confirmDeleteProduct = (editProduct) => {
     product.value = editProduct;
@@ -313,44 +290,10 @@ const deleteSelectedProducts = () => {
                     </div>
 
                     <div class="field">
-                        <label for="bin_collection" class="mb-3">Bin Collection</label>
-                        <Dropdown id="bin_collection" v-model="customer.bin_collection" :options="statuses" optionLabel="label" placeholder="Select a Status">
-                            <template #value="slotProps">
-                                <div v-if="slotProps.value && slotProps.value.value">
-                                    <span :class="'product-badge status-' + slotProps.value.value">{{ slotProps.value.label }}</span>
-                                </div>
-                                <div v-else-if="slotProps.value && !slotProps.value.value">
-                                    <span :class="'product-badge status-' + slotProps.value.toLowerCase()">{{ slotProps.value }}</span>
-                                </div>
-                                <span v-else>
-                                    {{ slotProps.placeholder }}
-                                </span>
-                            </template>
-                        </Dropdown>
+                        <label for="binCollection" class="mb-3">Bin Collection</label>
+                        <InputText id="binCollection" v-model="customer.bin_collection" required="true" autofocus :invalid="submitted && !customer.name" />
+                        <small class="p-invalid" v-if="submitted && !customer.bin_collection">Bin collection is required.</small>                            
                     </div>
-                    <!--
-                    <div class="field">
-                        <label class="mb-3">Category</label>
-                        <div class="formgrid grid">
-                            <div class="field-radiobutton col-6">
-                                <RadioButton id="category1" name="category" value="Accessories" v-model="product.category" />
-                                <label for="category1">Accessories</label>
-                            </div>
-                            <div class="field-radiobutton col-6">
-                                <RadioButton id="category2" name="category" value="Clothing" v-model="product.category" />
-                                <label for="category2">Clothing</label>
-                            </div>
-                            <div class="field-radiobutton col-6">
-                                <RadioButton id="category3" name="category" value="Electronics" v-model="product.category" />
-                                <label for="category3">Electronics</label>
-                            </div>
-                            <div class="field-radiobutton col-6">
-                                <RadioButton id="category4" name="category" value="Fitness" v-model="product.category" />
-                                <label for="category4">Fitness</label>
-                            </div>
-                        </div>
-                    </div>
-                    -->
                     <div class="formgrid grid">
                         <div class="field col">
                             <label for="phone">Phone</label>
@@ -373,7 +316,43 @@ const deleteSelectedProducts = () => {
                             <InputText id="subscription" v-model="customer.subscription" integeronly />
                         </div>
                     </div>
-
+                    <div class="formgrid grid">
+                        <div class="field col">
+                            <label for="order_date">Order Date</label>
+                            <InputText id="order_date" v-model="customer.order_date" mode="date" :invalid="submitted && !customer.order_date" :required="true" />
+                            <small class="p-invalid" v-if="submitted && !customer.order_date">Order date is required.</small>
+                        </div>
+                        <div class="field col">
+                            <label for="active">Active</label>
+                            <InputText id="active" v-model="customer.active" integeronly />
+                        </div>
+                    </div>
+                    <div class="formgrid grid">
+                        <div class="field col">
+                            <label for="invoice_url">Stripe Invoice</label>
+                            <!--viewInvoice is a dataStore action that opens a new tab-->
+                            <Button label="View Invoice" @click="dataStore.viewInvoice(customer.invoice_url)" />
+                        </div>
+                        <div class="field col">
+                            <label for="cus_id">Stripe ID</label>
+                            <InputText id="cus_id" v-model="customer.cus_id" integeronly />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="flex align-items-center justify-content-center">
+                            <label for="one_off_cleans">One-Off Cleans If Applicable</label>
+                        </div>
+                    </div>
+                    <div class="formgrid grid">
+                        <div class="field col">
+                            <label for="clean_date">Clean Date</label>
+                            <InputText id="clean_date" v-model="customer.clean_date" mode="date" :invalid="submitted && !customer.clean_date" :required="true" />
+                        </div>
+                        <div class="field col">
+                            <label for="selected_bins">Selected Bins</label>
+                            <InputText id="selected_bins" v-model="customer.selected_bins" integeronly />
+                        </div>
+                    </div>
                     <template #footer>
                         <Button label="Cancel" icon="pi pi-times" text="" @click="hideDialog" />
                         <Button label="Save" icon="pi pi-check" text="" @click="saveProduct" />
