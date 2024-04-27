@@ -6,15 +6,32 @@ import { useToast } from 'primevue/usetoast';
 
 import { useDataStore } from '@/stores/DataStore';
 
+const toast = useToast();
 const dataStore = useDataStore();
+const customer = ref([]);  // Initialse customer as a reative reference
+const  customers = ref([]);
+const selectedCustomers = ref(null);
+const filters = ref({});
+const customerDialog = ref(false);
+const deleteCustomerDialog = ref(false);
+const deleteCustomersDialog = ref(false);
+const submitted = ref(false);
+const statuses = ref([
+    { label: 'MONDAY', value: 'monday' },
+    { label: 'TUESDAY', value: 'tuesday' },
+    { label: 'WEDNESDAY', value: 'wednesday' },
+    { label: 'THURSDAY', value: 'thursday' },
+    { label: 'FRIDAY', value: 'friday' },
+    { label: 'SATURDAY', value: 'saturday' },
+    { label: 'SUNDAY', value: 'sunday' },
+]);
+
+
 
 onMounted(async () => {
     await dataStore.fetchCustomers();
+    customer.value = dataStore.getCustomer.customers;  // Update customer constant after fetching data
 });
-
-const toast = useToast();
-const selectedCustomers = ref(null);
-const filters = ref({});
 
 
 const exportCSV = () => {
@@ -38,6 +55,36 @@ onBeforeMount(() => {
     initFilters();
 });
 
+// NOTE: original cosnt is named editProduct
+// Remained related functions still need to be renamed
+const editCustomer = (editCustomer) => {
+    customer.value = { ...editCustomer };
+    customerDialog.value = true;
+};
+
+const confirmDeleteCustomer = (editCustomer) => {
+    customer.value = editCustomer;
+    deleteCustomerDialog.value = true;
+};
+
+const deleteCustomer = () => {
+    customers.value = customers.value.filter((val) => val.id !== customer.value.id);
+    deleteCustomerDialog.value = false;
+    customer.value = {};
+    toast.add({ severity: 'success', summary: 'Successful', detail: 'Customer Deleted', life: 3000 });
+};
+
+
+const findIndexById = (id) => {
+    let index = -1;
+    for (let i = 0; i < dataStore.getCustomer.customers.value.length; i++) {
+        if (dataStore.getCustomer.customers.value[i].id === id) {
+            index = i;
+            break;
+        }
+    }
+    return index;
+};
 /*
 const products = ref(null);
 const productDialog = ref(false);
@@ -47,12 +94,6 @@ const product = ref({});
 
 
 
-const submitted = ref(false);
-const statuses = ref([
-    { label: 'INSTOCK', value: 'instock' },
-    { label: 'LOWSTOCK', value: 'lowstock' },
-    { label: 'OUTOFSTOCK', value: 'outofstock' }
-]);
 
 const productService = new ProductService();
 */
@@ -249,30 +290,30 @@ const deleteSelectedProducts = () => {
                             {{ slotProps.data.active }}
                         </template>
                     </Column>
-                    <!--
+                    
                     <Column headerStyle="min-width:10rem;">
                         <template #body="slotProps">
-                            <Button icon="pi pi-pencil" class="mr-2" severity="success" rounded @click="editProduct(slotProps.data)" />
+                            <Button icon="pi pi-pencil" class="mr-2" severity="success" rounded @click="editCustomer(slotProps.data)" />
                             <Button icon="pi pi-trash" class="mt-2" severity="warning" rounded @click="confirmDeleteProduct(slotProps.data)" />
                         </template>    
                     </Column>
-                    -->
+            
                 </DataTable>
-                <!--
-                <Dialog v-model:visible="productDialog" :style="{ width: '450px' }" header="Product Details" :modal="true" class="p-fluid">
+                
+                <Dialog v-model:visible="customerDialog" :style="{ width: '450px' }" header="Customer Details" :modal="true" class="p-fluid">
                     <div class="field">
                         <label for="name">Name</label>
-                        <InputText id="name" v-model.trim="product.name" required="true" autofocus :invalid="submitted && !product.name" />
-                        <small class="p-invalid" v-if="submitted && !product.name">Name is required.</small>
+                        <InputText id="name" v-model.trim="customer.name" required="true" autofocus :invalid="submitted && !customer.name" />
+                        <small class="p-invalid" v-if="submitted && !customer.name">Name is required.</small>
                     </div>
                     <div class="field">
-                        <label for="description">Description</label>
-                        <Textarea id="description" v-model="product.description" required="true" rows="3" cols="20" />
+                        <label for="address">Address</label>
+                        <Textarea id="description" v-model="customer.address" required="true" rows="3" cols="20" />
                     </div>
 
                     <div class="field">
-                        <label for="inventoryStatus" class="mb-3">Inventory Status</label>
-                        <Dropdown id="inventoryStatus" v-model="product.inventoryStatus" :options="statuses" optionLabel="label" placeholder="Select a Status">
+                        <label for="bin_collection" class="mb-3">Bin Collection</label>
+                        <Dropdown id="bin_collection" v-model="customer.bin_collection" :options="statuses" optionLabel="label" placeholder="Select a Status">
                             <template #value="slotProps">
                                 <div v-if="slotProps.value && slotProps.value.value">
                                     <span :class="'product-badge status-' + slotProps.value.value">{{ slotProps.value.label }}</span>
@@ -286,7 +327,7 @@ const deleteSelectedProducts = () => {
                             </template>
                         </Dropdown>
                     </div>
-
+                    <!--
                     <div class="field">
                         <label class="mb-3">Category</label>
                         <div class="formgrid grid">
@@ -308,49 +349,60 @@ const deleteSelectedProducts = () => {
                             </div>
                         </div>
                     </div>
-                    
+                    -->
                     <div class="formgrid grid">
                         <div class="field col">
-                            <label for="price">Price</label>
-                            <InputNumber id="price" v-model="product.price" mode="currency" currency="USD" locale="en-US" :invalid="submitted && !product.price" :required="true" />
-                            <small class="p-invalid" v-if="submitted && !product.price">Price is required.</small>
+                            <label for="phone">Phone</label>
+                            <InputNumber id="phone" v-model="customer.phone" :invalid="submitted && !customer.phone" :required="true" />
+                            <small class="p-invalid" v-if="submitted && !customer.phone">Phone is required.</small>
                         </div>
                         <div class="field col">
-                            <label for="quantity">Quantity</label>
-                            <InputNumber id="quantity" v-model="product.quantity" integeronly />
+                            <label for="email">Email</label>
+                            <InputNumber id="email" v-model="customer.email" integeronly />
+                        </div>
+                    </div>                  
+                    <div class="formgrid grid">
+                        <div class="field col">
+                            <label for="amount_paid">Amount Paid</label>
+                            <InputNumber id="amount_paid" v-model="customer.amount_paid" mode="currency" currency="AUD" locale="en-AU" :invalid="submitted && !customer.amount_paid" :required="true" />
+                            <small class="p-invalid" v-if="submitted && !customer.amount_paid">Amount paid is required.</small>
+                        </div>
+                        <div class="field col">
+                            <label for="subscription">Subscription</label>
+                            <InputNumber id="subscription" v-model="customer.subscription" integeronly />
                         </div>
                     </div>
+
                     <template #footer>
                         <Button label="Cancel" icon="pi pi-times" text="" @click="hideDialog" />
                         <Button label="Save" icon="pi pi-check" text="" @click="saveProduct" />
                     </template>
                 </Dialog>
 
-                <Dialog v-model:visible="deleteProductDialog" :style="{ width: '450px' }" header="Confirm" :modal="true">
+                <Dialog v-model:visible="deleteCustomerDialog" :style="{ width: '450px' }" header="Confirm" :modal="true">
                     <div class="flex align-items-center justify-content-center">
                         <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                        <span v-if="product"
-                            >Are you sure you want to delete <b>{{ product.name }}</b
+                        <span v-if="customer"
+                            >Are you sure you want to delete <b>{{ customer.name }}</b
                             >?</span
                         >
                     </div>
                     <template #footer>
-                        <Button label="No" icon="pi pi-times" text @click="deleteProductDialog = false" />
-                        <Button label="Yes" icon="pi pi-check" text @click="deleteProduct" />
+                        <Button label="No" icon="pi pi-times" text @click="deleteCustomerDialog = false" />
+                        <Button label="Yes" icon="pi pi-check" text @click="deleteCustomer" />
                     </template>
                 </Dialog>
 
-                <Dialog v-model:visible="deleteProductsDialog" :style="{ width: '450px' }" header="Confirm" :modal="true">
+                <Dialog v-model:visible="deleteCustomersDialog" :style="{ width: '450px' }" header="Confirm" :modal="true">
                     <div class="flex align-items-center justify-content-center">
                         <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                        <span v-if="product">Are you sure you want to delete the selected products?</span>
+                        <span v-if="customer">Are you sure you want to delete the selected customers?</span>
                     </div>
                     <template #footer>
-                        <Button label="No" icon="pi pi-times" text @click="deleteProductsDialog = false" />
-                        <Button label="Yes" icon="pi pi-check" text @click="deleteSelectedProducts" />
+                        <Button label="No" icon="pi pi-times" text @click="deleteCustomersDialog = false" />
+                        <Button label="Yes" icon="pi pi-check" text @click="deleteSelectedCustomers" />
                     </template>
                 </Dialog>
-                -->
             </div>
         </div>
     </div>
