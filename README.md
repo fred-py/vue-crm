@@ -36,3 +36,5 @@ npm run lint
 
 # Hosted on Firebase
 https://cli.vuejs.org/guide/deployment.html#firebase
+
+https://firebase.google.com/docs/hosting/
