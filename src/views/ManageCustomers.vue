@@ -232,13 +232,13 @@ const deleteSelectedProducts = () => {
                             {{ slotProps.data.address }}
                         </template>
                     </Column>
-                    <Column field="bin_collection" header="Bin Collection" :sortable="true" headerStyle="width:14%; min-width:10rem;">
+                    <Column field="bin_collection" header="Bin Collection" :sortable="true" headerStyle="width:14%; min-width:7rem;">
                         <template #body="slotProps">
                             <span class="p-column-title">Bin Collection</span>
                             {{ slotProps.data.bin_collection }}
                         </template>
                     </Column>
-                    <Column header="subscription" headerStyle="width:14%; min-width:10rem;">
+                    <Column header="subscription" headerStyle="width:14%; min-width:5rem;">
                         <template #body="slotProps">
                             <span class="p-column-title">Subscription</span>
                             {{ slotProps.data.subscription }}
@@ -250,7 +250,7 @@ const deleteSelectedProducts = () => {
                             {{ slotProps.data.order_date }}
                         </template>
                     </Column>
-                    <Column field="name" header="Name" :sortable="true" headerStyle="width:14%; min-width:10rem;">
+                    <Column field="name" header="Name" :sortable="true" headerStyle="width:14%; min-width:7rem;">
                         <template #body="slotProps">
                             <span class="p-column-title">Name</span>
                             {{ slotProps.data.name }}
@@ -262,7 +262,7 @@ const deleteSelectedProducts = () => {
                             {{ slotProps.data.phone }}
                         </template>
                     </Column>
-                    <Column field="active" header="Active" :sortable="true" headerStyle="width:14%; min-width:10rem;">
+                    <Column field="active" header="Active" :sortable="true" headerStyle="width:14%; min-width:5rem;">
                         <template #body="slotProps">
                             <span class="p-column-title">Active</span>
                             {{ slotProps.data.active }}
