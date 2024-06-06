@@ -22,13 +22,13 @@ export const useDataStore = defineStore('DataStore', {
         // Fetch data from the server
         async fetchCustomers() {
             // Fetch data from the server
-            const response = await axios.get('https://wheeliewash3.2.sg-1.fl0.io/api/v1/customers/');
+            const response = await axios.get('https://www.wheeliewash.au/api/v1/customers/');
             // Set the data to the store
             this.customers = response.data;
         },
         async fetchTotalOrders() {
             // Fetch data from the server
-            const response = await axios.get('https://wheeliewash3.2.sg-1.fl0.io/api/v1/orders/');
+            const response = await axios.get('https://www.wheeliewash.au/api/v1/orders/');
             // Set the data to the store
             console.log(response.data);
             this.totalOrders = response.data;

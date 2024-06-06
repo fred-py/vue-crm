@@ -2,6 +2,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Dashboard from '../views/Dashboard.vue'
 import AppLayout from '@/layout/AppLayout.vue'  // This is from PrimeVue Sakai template
 import ManageCustomers from '@/views/ManageCustomers.vue'
+import Login from '@/components/Login.vue'
+import Register from '@/components/Register.vue'
+//import LoginPage from '@/views/LoginPage.vue'
+//import RegisterPage from '@/views/RegisterPage.vue'
+
 
 
 
@@ -10,17 +15,33 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      component: AppLayout,
+      component: AppLayout,  // Ensure AppLayout wraps the dashboard routes
+      //meta: { 
+      //  requiresAuth: true,   // This can be names anything 
+      //},
+
       children: [
         {
-          path:'/',
+          path:'',  // Empty path is the default route
+          name: 'dashboard',
           component: Dashboard,
         },
         {
           path: '/manage/customers',
+          name: 'manage-customers',
           component: ManageCustomers,
         },
-      ]
+      ],
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login,
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register,
     },
   ]
 })
