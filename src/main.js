@@ -31,11 +31,14 @@ import Toolbar from 'primevue/toolbar';
 
 import BlockViewer from '@/components/BlockViewer.vue';
 
+import { createAuth0 } from '@auth0/auth0-vue';
+
 //import 'primevue/resources/themes/aura-dark-lime/theme.css';  // Theme
 //import 'primevue/resources/primevue.min.css';                // Core CSS
 //import 'primeicons/primeicons.css';                          // Icons
 
 import '@/assets/styles.scss';  // Global Style Config
+
 
 const pinia = createPinia()
 const app = createApp(App);
@@ -45,6 +48,17 @@ app.use(createPinia())
 app.use(router);
 app.use(PrimeVue, {ripple: true});
 app.use(ToastService);  // Add Toast service to app
+
+// Auth0 Configuration
+app.use(
+    createAuth0({
+      domain: "dev-hjtuf0lq8il68xek.au.auth0.com",
+      clientId: "ixaVAOET2plUE4WRzaTpjXx2IrNZUPMq",
+      authorizationParams: {
+        redirect_uri: window.location.origin
+      }
+    })
+  );
 
 app.directive('tooltip', Tooltip);
 app.directive('ripple', Ripple);

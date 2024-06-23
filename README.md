@@ -1,5 +1,12 @@
 # vue-united
 
+
+# Deploy/Push changes to firebase
+> Create production build
+$ npm run build
+> Deploy to Firebase
+> firebase deploy --only hosting
+
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
