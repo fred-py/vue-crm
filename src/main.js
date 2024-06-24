@@ -35,7 +35,7 @@ import { createAuth0 } from '@auth0/auth0-vue';
 
 //import 'primevue/resources/themes/aura-dark-lime/theme.css';  // Theme
 //import 'primevue/resources/primevue.min.css';                // Core CSS
-//import 'primeicons/primeicons.css';                          // Icons
+import 'primeicons/primeicons.css';                          // Icons
 
 import '@/assets/styles.scss';  // Global Style Config
 
