@@ -12,6 +12,7 @@ import ToastService from 'primevue/toastservice';
 // Import modules needed for PrimeVue design
 // Eg. input forms, tables etc...
 import Button from 'primevue/button';
+import Card from 'primevue/card';
 import Column from 'primevue/column';
 import Chart from 'primevue/chart';
 import Checkbox from 'primevue/checkbox';
@@ -68,6 +69,7 @@ app.component('BlockViewer', BlockViewer);
 
 // Add PrimeVue components to app
 app.component('Button', Button);
+app.component('Card', Card);
 app.component('Column', Column);
 app.component('Chart', Chart);
 app.component('Checkbox', Checkbox);

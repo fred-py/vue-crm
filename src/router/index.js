@@ -4,9 +4,9 @@ import Dashboard from '../views/Dashboard.vue'
 import AppLayout from '@/layout/AppLayout.vue'  // This is from PrimeVue Sakai template
 import ManageCustomers from '@/views/ManageCustomers.vue'
 import RegisterUser from '@/views/RegisterUser.vue'
-import Login from '@/components/Login.vue'
+//import Login from '@/components/Login.vue'
 import Register from '@/components/Register.vue'
-//import LoginPage from '@/views/LoginPage.vue'
+import LoginPage from '@/views/LoginPage.vue'
 //import RegisterPage from '@/views/RegisterPage.vue'
 
 
@@ -43,7 +43,7 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: Login,
+      component: LoginPage,
     },
     {
       path: '/register',

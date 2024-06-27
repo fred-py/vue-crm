@@ -39,7 +39,6 @@ export const useDataStore = defineStore('DataStore', {
 
     },
     // Getters are used to get data from the store
-
     getters: {
         // Get the number of customers
         getCustomer() {
