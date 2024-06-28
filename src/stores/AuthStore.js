@@ -20,10 +20,11 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     async loginUser(email, password) {
       try {
-        this.userData = await axios.post(
+        const response = await axios.post(
           'http://localhost:5000/api/v1/login/',
           { email, password }
         );
+        this.token = response.data.token;
         // Optionally store token (if your backend provides it) in localStorage:
         localStorage.setItem('token', response.data.token);
         console.log(response.data);
@@ -43,14 +44,15 @@ export const useAuthStore = defineStore('auth', {
 
     async register(email, password) {
       try {
-        const response = await axios.post('https://www.wheeliewash.au/api/v1/register/', { // Adjust your backend API endpoint
+        const response = await axios.post(
+          'https://www.wheeliewash.au/api/v1/register/', { // Adjust your backend API endpoint
           email, 
           password,
         });
 
         this.user = response.data.user; // Assuming your backend sends user data in response
         this.isAuthenticated = true;
-
+        // Return email sent for verification
         // Optionally store token (if your backend provides it) in localStorage:
         // localStorage.setItem('token', response.data.token);
 

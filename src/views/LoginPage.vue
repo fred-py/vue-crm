@@ -13,7 +13,7 @@
         then the sendForm method can focus exclusively on the logic 
         of submitting the form with axios and not on event handling
         more on that here:https://www.vuemastery.com/courses/vue3-forms/submitting-forms -->  
-      <form @submit.prevent="sendForm">
+      <form @submit.prevent="submitForm">
         <div class="flex gap-4">
         <BaseInput
           v-model="email"
@@ -30,30 +30,13 @@
         />
         </div>
 
-        <Button @click="exportData" type="submit"  >Login</button>
+        <Button type="submit"  >Login</button>
       </form>
     </template>
   </Card>
 </div>
 
 </template>
-
-<script setup>
-import BaseInput from '@/components/BaseInput.vue'; // Adjust the import path as needed
-import { ref } from 'vue';
-//import { useAuthStore } from '@/stores/AuthStore'; // Adjust the import path as needed
-//const authStore = useAuthStore();
-const email = ref('');
-const password = ref('');
-
-const exportData = () => {
-  console.log(email.value, password.value);
-  }
-
-const sendForm = () => {
-  // Form submission will be handled here
-}
-</script>
 
 <style scoped>
   .card-container {
@@ -63,3 +46,26 @@ const sendForm = () => {
     height: 100vh;
   }
 </style>
+
+<script setup>
+import BaseInput from '@/components/BaseInput.vue'; // Adjust the import path as needed
+import { useAuthStore } from '@/stores/AuthStore';
+import { ref } from 'vue';
+
+// Initialise store
+const authStore = useAuthStore();
+// Create reactive reference objects 
+// for email and password
+const email = ref('');
+const password = ref('');
+
+// submitFrom is called from the @submit.prevent
+const submitForm = () => {
+  console.log(email.value, password.value);
+  }
+  // access ref objects with .value
+  // Send login details to the backend
+  authStore.loginUser(email.value, password.value)
+
+</script>
+
