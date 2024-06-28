@@ -15,7 +15,7 @@
                 <router-link to="/register" rel="noopener">
                     <Button label="Register"  severity="secondary" text raised/>
                 </router-link>
-            </div>     
+            </div>
         </div>
     </body>
 </template>

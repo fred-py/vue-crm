@@ -1,15 +1,19 @@
 <template>
   <div class="card-container">
   <Card style="
-    width: 25rem;
+    width: 20rem;
     overflow: hidden;
     align-items: center;
     padding-top: 2rem;
   ">
     <template #header>
-    <h4>Login to United Wheelie Wash</h4>
+    <h6>Login to the Dashboard</h6>
       <!--<form @submit.prevent="authStore.login(email, password)">-->
-      <form>
+      <!--@submit.prevent stops the form from its default handling
+        then the sendForm method can focus exclusively on the logic 
+        of submitting the form with axios and not on event handling
+        more on that here:https://www.vuemastery.com/courses/vue3-forms/submitting-forms -->  
+      <form @submit.prevent="sendForm">
         <div class="flex gap-4">
         <BaseInput
           v-model="email"
@@ -45,6 +49,10 @@ const password = ref('');
 const exportData = () => {
   console.log(email.value, password.value);
   }
+
+const sendForm = () => {
+  // Form submission will be handled here
+}
 </script>
 
 <style scoped>

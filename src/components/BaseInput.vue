@@ -2,7 +2,8 @@
 https://www.vuemastery.com/courses/vue3-forms/base-input
 
 Base components can be used across multiple eg
-login form, register etc...-->
+login form, register etc...
+-->
 
 <!-- v-model directive is not used in this component,
  instead it will be added to child components
