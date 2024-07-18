@@ -7,6 +7,7 @@ import RegisterUser from '@/views/RegisterUser.vue'
 //import Login from '@/components/Login.vue'
 import Register from '@/components/Register.vue'
 import LoginPage from '@/views/LoginPage.vue'
+import LoginPageOptions from '@/views/LoginPageOptions.vue'
 //import RegisterPage from '@/views/RegisterPage.vue'
 
 
@@ -43,7 +44,7 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: LoginPage,
+      component: LoginPageOptions,
     },
     {
       path: '/register',

@@ -32,6 +32,8 @@ import Toolbar from 'primevue/toolbar';
 
 import BlockViewer from '@/components/BlockViewer.vue';
 
+import BaseInput from './components/BaseInput.vue';
+
 import { createAuth0 } from '@auth0/auth0-vue';
 
 //import 'primevue/resources/themes/aura-dark-lime/theme.css';  // Theme
@@ -84,5 +86,7 @@ app.component('Sidebar', Sidebar);
 app.component('Toast', Toast);
 app.component('Toolbar', Toolbar);
 
+//Make BaseInput Component Globally available
+app.component('BaseInput', BaseInput);
 
 app.mount('#app')

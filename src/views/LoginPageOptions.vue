@@ -34,10 +34,43 @@
       </form>
     </template>
   </Card>
-  
 </div>
+
 </template>
 
+<script>
+//import BaseInput from '@/components/BaseInput.vue'; // Adjust the import path as needed
+import axios from 'axios';
+
+// sendFrom is called from the @submit.prevent
+export default {
+  data () {
+    return {
+        email: '',
+        password: '',
+    }
+  },
+  methods: {
+    sendForm (e) {
+      axios.post('http://localhost:5000/api/v1/tokens', {
+        email: this.email,
+        password: this.password
+      }, 
+      {
+        headers: {
+          Authorization: `Basic ${btoa(`${this.email}:${this.password}`)}`,
+        }
+      })
+      .then(function (response) {
+        console.log('Response', response);
+      })
+      .catch(function (err) {
+        console.log('Error', err);
+      });
+    }
+  }
+}
+</script>
 <style scoped>
   .card-container {
     display: flex;
@@ -46,31 +79,4 @@
     height: 100vh;
   }
 </style>
-
-<script setup>
-import BaseInput from '@/components/BaseInput.vue'; // Adjust the import path as needed
-import { useAuthStore } from '@/stores/AuthStore';
-
-import { ref } from 'vue';
-
-// Initialise store
-const authStore = useAuthStore();
-// Create reactive reference objects 
-// for email and password
-const email = ref('');
-const password = ref('');
-
-// submitFrom is called from the @submit.prevent
-const sendForm =  async () => {
-  console.log(`From sendForm LoginPage', ${email.value, password.value}`);
-  try {
-    // access ref objects with .value
-    // Send login details to the backend
-    // async and await so this func only triggers if event happens
-    await authStore.loginUser(email.value, password.value)
-  } catch (error) {
-    console.error('error logging in', error);
-  }
-}
-</script>
 
