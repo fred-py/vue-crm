@@ -62,7 +62,6 @@ const password = ref('');
 
 // submitFrom is called from the @submit.prevent
 const sendForm =  async () => {
-  console.log(`From sendForm LoginPage', ${email.value, password.value}`);
   try {
     // access ref objects with .value
     // Send login details to the backend

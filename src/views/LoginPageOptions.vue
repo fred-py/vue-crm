@@ -55,7 +55,9 @@ export default {
       axios.post('http://localhost:5000/api/v1/tokens', {
         email: this.email,
         password: this.password
-      }, 
+      },
+      // Authorization header must be included in request
+      // btoa converts email and password to base64 
       {
         headers: {
           Authorization: `Basic ${btoa(`${this.email}:${this.password}`)}`,

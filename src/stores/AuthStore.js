@@ -23,38 +23,25 @@ async loginUser(email, password) {
   try {
     const response = await axios.post('http://localhost:5000/api/v1/tokens',
       { email, password },
+      // Authorization header must be included in request
+      // btoa converts email and password to base64 
       {
         headers: {
-          'Content-Type': 'application/json',
+          Authorization: `Basic ${btoa(`${email}:${password}`)}`,
         },
       }
     );
 
-    // It's unclear how userData is structured within response. Assuming `userData` and `name` are directly under `data`.
-    // Make sure `response.data` and `response.data.userData` is not null before accessing its properties.
-    if (response.data && response.data.userData) {
-      console.log(`THIS HERE response:`, response);
-      console.log(`THIS HERE:`, response.data.userData.headers); // Assuming headers is a property of userData
-      console.log(`THIS HERE:`, response.data.userData);
-
-      if (response.data.token) {
-        this.token = response.data.token;
-        localStorage.setItem('token', response.data.token);
-        console.log(response.data);
-
-        // Ensure `userData.name` exists before using it
-        const userName = response.data.userData.name ? response.data.userData.name : 'User';
-        showTooltip(`Welcome back ${userName}!`);
+    console.log('Response', response);
+    // Check if response data exists eg. successfull api request
+    if (response.data) {
+        const token = response.data.token;
+        // Store token on Pinia State
+        this.token = token;
         this.isAuthenticated = true;
-      } else {
-        // Handle case where token is not in response
-        console.error('Token not found in response');
-        this.isAuthenticated = false;
-      }
-    } else {
-      console.error('User data not found in response');
-      this.isAuthenticated = false;
+        localStorage.setItem('token', token);
     }
+
   } catch (error) {
     // Handle login errors (e.g., display error messages)
     console.error('This is the error', error);
