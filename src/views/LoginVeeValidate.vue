@@ -18,15 +18,18 @@
         <BaseInput
           v-model="email"
           label="Email"
-          type="text"
+          type="email"
+          :error="emailError"
         />
         </div>
 
         <div class="flex gap-3 mt-1">
+        
         <BaseInput
           v-model="password"
           label="Password"
-          type="text"
+          type="password"
+          :error="passwordError"
         />
         </div>
 
@@ -39,16 +42,51 @@
 </template>
 
 <script setup>
+// https://github.com/Code-Pop/validating-vue3-forms/blob/lesson3/end/src/views/LoginForm.vue
 import BaseInput from '@/components/BaseInput.vue'; // Adjust the import path as needed
+import PasswordInput from '@/components/PasswordInput.vue';
 import { useAuthStore } from '@/stores/AuthStore';
 import { ref } from 'vue';
+import { useField, useForm } from 'vee-validate';
 
 // Initialise store
 const authStore = useAuthStore();
 // Create reactive reference objects 
 // for email and password
-const email = ref('');
-const password = ref('');
+
+//const email = ref ('');
+//const password = ref('');
+
+// Note email ref has been replaced by the useField function from vee-validate validation
+//const { value: email, errorMessage: emailError } = useField('email', (value) => {
+
+const validation = {
+  email: value => {
+    if (!value) return 'Email is required';
+
+    //const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const regex = /^[^\s@]+@[^\s@]+\.(?:com|au)$/i;
+    if (!regex.test(String(value).toLowerCase())) {
+      return 'Please enter a valid email address';
+    }
+    return true
+  },
+  password: value => {
+    const requiredMessage = 'This field is required'
+    if (value === undefined || value === null) return requiredMessage
+    // If length not greater than zero
+    if (!String(value).length) return requiredMessage
+
+    return true
+  }
+}
+//  https://www.vuemastery.com/courses/validating-vue3-forms/validating-at-form-level
+useForm({
+  validationSchema: validation
+})
+
+const { value: email, errorMessage: emailError } = useField('email')
+const { value: password, errorMessage: passwordError } = useField('password')
 
 // submitFrom is called from the @submit.prevent
 const sendForm =  async () => {

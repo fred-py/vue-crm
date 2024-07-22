@@ -8,6 +8,8 @@ import RegisterUser from '@/views/RegisterUser.vue'
 import Register from '@/components/Register.vue'
 import LoginPage from '@/views/LoginPage.vue'
 import LoginPageOptions from '@/views/LoginPageOptions.vue'
+import LoginVeeValidate from '@/views/LoginVeeValidate.vue'
+import LoginVeeValidate2 from '@/views/LoginVeeValidate2.vue'
 //import RegisterPage from '@/views/RegisterPage.vue'
 
 
@@ -44,7 +46,7 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: LoginPage,
+      component: LoginVeeValidate2,
     },
     {
       path: '/register',

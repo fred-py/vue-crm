@@ -29,9 +29,11 @@ import StyleClass from 'primevue/styleclass';
 import Toast from 'primevue/toast';
 import Tooltip from 'primevue/tooltip';
 import Toolbar from 'primevue/toolbar';
+import Password from 'primevue/password';
 
 import BlockViewer from '@/components/BlockViewer.vue';
 
+// Custom components
 import BaseInput from './components/BaseInput.vue';
 
 import { createAuth0 } from '@auth0/auth0-vue';
@@ -85,6 +87,7 @@ app.component('SelectButton', SelectButton);
 app.component('Sidebar', Sidebar);
 app.component('Toast', Toast);
 app.component('Toolbar', Toolbar);
+app.component('Password', Password);
 
 //Make BaseInput Component Globally available
 app.component('BaseInput', BaseInput);

@@ -19,20 +19,21 @@ export const useAuthStore = defineStore('auth', {
 
 
   actions: {
-async loginUser(email, password) {
-  try {
-    const response = await axios.post('http://localhost:5000/api/v1/tokens',
-      { email, password },
-      // Authorization header must be included in request
-      // btoa converts email and password to base64 
-      {
-        headers: {
-          Authorization: `Basic ${btoa(`${email}:${password}`)}`,
-        },
-      }
-    );
+    async loginUser(email, password) {
+      try {
+        const response = await axios.post('http://localhost:5000/api/v1/tokens',
+          { email, password },
+          // Authorization header must be included in request
+          // btoa converts email and password to base64 
+          {
+            headers: {
+              Authorization: `Basic ${btoa(`${email}:${password}`)}`,
+            },
+          }
+        );
 
-    console.log('Response', response);
+
+    //console.log('Response', response);
     // Check if response data exists eg. successfull api request
     if (response.data) {
         const token = response.data.token;
@@ -40,7 +41,9 @@ async loginUser(email, password) {
         this.token = token;
         this.isAuthenticated = true;
         localStorage.setItem('token', token);
-    }
+    } 
+    // Rerun response object after processing
+    return response;
 
   } catch (error) {
     // Handle login errors (e.g., display error messages)

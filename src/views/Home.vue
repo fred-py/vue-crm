@@ -12,9 +12,11 @@
                 <router-link to="/login" rel="noopener">
                     <Button label="Login"  severity="secondary" text raised />
                 </router-link>
+                <!--
                 <router-link to="/register" rel="noopener">
                     <Button label="Register"  severity="secondary" text raised/>
                 </router-link>
+                -->
             </div>
         </div>
     </body>
