@@ -2,10 +2,12 @@
 
 
 # Deploy/Push changes to firebase
-> Create production build
+
+> Create production build after every update that requires deployment
 $ npm run build
+
 > Deploy to Firebase
-> firebase deploy --only hosting
+$ firebase deploy --only hosting
 
 This template should help get you started developing with Vue 3 in Vite.
 

@@ -1,9 +1,13 @@
-import { createApp } from 'vue'
+import { createApp } from 'vue';
 // State Manegement Library
 // Pinia Docs: https://pinia.vuejs.org/getting-started.html
-import { createPinia } from 'pinia'
-import App from './App.vue'
-import router from './router'
+import { createPinia } from 'pinia';
+import axios from 'axios';
+import interceptors from './interceptors';
+//import axios from './axiosConfig';
+import { useAuthStore } from './stores/AuthStore';
+import App from './App.vue';
+import router from './router';
 
 
 import PrimeVue from 'primevue/config';
@@ -48,22 +52,25 @@ import '@/assets/styles.scss';  // Global Style Config
 const pinia = createPinia()
 const app = createApp(App);
 
-app.use(createPinia())
+//app.use(createPinia())
+
 
 app.use(router);
+app.use(pinia);
 app.use(PrimeVue, {ripple: true});
 app.use(ToastService);  // Add Toast service to app
 
-// Auth0 Configuration
-app.use(
-    createAuth0({
-      domain: "dev-hjtuf0lq8il68xek.au.auth0.com",
-      clientId: "ixaVAOET2plUE4WRzaTpjXx2IrNZUPMq",
-      authorizationParams: {
-        redirect_uri: window.location.origin
-      }
-    })
-  );
+// Register the interceptor before making any Axios requests
+// This will intercept all requests and include the token in the header
+axios.interceptors.request.use(interceptors.request, interceptors.response);
+
+
+// Retrieve token from localStorage on app initialisation
+const storedToken = localStorage.getItem('token');
+if (storedToken) {
+  useAuthStore().setToken(storedToken)
+}
+
 
 app.directive('tooltip', Tooltip);
 app.directive('ripple', Ripple);

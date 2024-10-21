@@ -15,7 +15,7 @@ export const useAuthStore = defineStore('auth', {
     token: null,
     isAuthenticated: false,
     message: null,
-  }),
+  }), 
 
 
   actions: {
@@ -33,6 +33,7 @@ export const useAuthStore = defineStore('auth', {
         );
 
 
+
     //console.log('Response', response);
     // Check if response data exists eg. successfull api request
     if (response.data) {
@@ -40,9 +41,10 @@ export const useAuthStore = defineStore('auth', {
         // Store token on Pinia State
         this.token = token;
         this.isAuthenticated = true;
+
         localStorage.setItem('token', token);
     } 
-    // Rerun response object after processing
+    // Return response object after processing
     return response;
 
   } catch (error) {
@@ -62,7 +64,7 @@ export const useAuthStore = defineStore('auth', {
           password,
         });
 
-        this.user = response.data.user; // Assuming your backend sends user data in response
+        this.user = response.data.user;
         this.isAuthenticated = true;
         this.message = response.data.message;
         console.log(response.data.message);
@@ -86,6 +88,13 @@ export const useAuthStore = defineStore('auth', {
     },
 
     // Additional actions (e.g., register, check authentication status) can be added here.
+
+    setToken(token) {
+    // Update store state and localStorage
+      //this.token = token;  
+      //this.isAuthenticated = true;
+      localStorage.setItem('token', token);
+    }
   },
 
   getters: {

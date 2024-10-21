@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import axios from 'axios';
 
 
-
 // https://vueschool.io/lessons/define-your-first-pinia-store?friend=vuerouter
 // Takes two arguments, id and options (both can be omitted)
 // id is used to connect the store to the devtools
@@ -21,14 +20,20 @@ export const useDataStore = defineStore('DataStore', {
     actions: {
         // Fetch data from the server
         async fetchCustomers() {
+            // Access token from AuthStore State -> https://www.vuemastery.com/courses/proven-pinia-patterns/modular-stores
             // Fetch data from the server
-            const response = await axios.get('https://www.wheeliewash.au/api/v1/customers/');
+            // code in interceptors.js is triggered automatically when calling axios.get
+            //const response = await axios.get('https://www.wheeliewash.au/api/v1/customers/');
+            const response = await axios.get('http://localhost:5000/api/v1/customers/');
+            console.log(response)
+            console.log(response.headers)
             // Set the data to the store
             this.customers = response.data;
         },
         async fetchTotalOrders() {
             // Fetch data from the server
-            const response = await axios.get('https://www.wheeliewash.au/api/v1/orders/');
+            const response = await axios.get('http://localhost:5000/api/v1/customers/');
+            //const response = await axios.get('https://www.wheeliewash.au/api/v1/orders/');
             // Set the data to the store
             console.log(response.data);
             this.totalOrders = response.data;
