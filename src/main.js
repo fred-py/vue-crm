@@ -49,8 +49,9 @@ import 'primeicons/primeicons.css';                          // Icons
 import '@/assets/styles.scss';  // Global Style Config
 
 
-const pinia = createPinia()
+
 const app = createApp(App);
+const pinia = createPinia()
 
 //app.use(createPinia())
 
@@ -99,4 +100,5 @@ app.component('Password', Password);
 //Make BaseInput Component Globally available
 app.component('BaseInput', BaseInput);
 
+app.use(createPinia())
 app.mount('#app')
