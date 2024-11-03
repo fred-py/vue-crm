@@ -52,6 +52,7 @@ import '@/assets/styles.scss';  // Global Style Config
 
 const app = createApp(App);
 const pinia = createPinia()
+//app.use(createPinia())
 
 //app.use(createPinia())
 
@@ -61,16 +62,18 @@ app.use(pinia);
 app.use(PrimeVue, {ripple: true});
 app.use(ToastService);  // Add Toast service to app
 
-// Register the interceptor before making any Axios requests
-// This will intercept all requests and include the token in the header
-axios.interceptors.request.use(interceptors.request, interceptors.response);
 
 
 // Retrieve token from localStorage on app initialisation
 const storedToken = localStorage.getItem('token');
 if (storedToken) {
+  console.log('from main,js', storedToken)
   useAuthStore().setToken(storedToken)
 }
+
+// Register the interceptor before making any Axios requests
+// This will intercept all requests and include the token in the header
+axios.interceptors.request.use(interceptors.request, interceptors.response);
 
 
 app.directive('tooltip', Tooltip);
@@ -100,5 +103,5 @@ app.component('Password', Password);
 //Make BaseInput Component Globally available
 app.component('BaseInput', BaseInput);
 
-app.use(createPinia())
+
 app.mount('#app')

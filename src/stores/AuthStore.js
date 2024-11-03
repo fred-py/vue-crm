@@ -39,9 +39,9 @@ export const useAuthStore = defineStore('auth', {
     if (response.data) {
         const token = response.data.token;
         // Store token on Pinia State
+        
         this.token = token;
         this.isAuthenticated = true;
-
         localStorage.setItem('token', token);
     } 
     // Return response object after processing
@@ -49,7 +49,7 @@ export const useAuthStore = defineStore('auth', {
 
   } catch (error) {
     // Handle login errors (e.g., display error messages)
-    console.error('This is the error', error);
+    //console.error('This is the error', error);
     this.message = "Failed to login. Please check your credentials and try again.";
     this.isAuthenticated = false; // Ensure isAuthenticated is set to false on error
     // Consider re-throwing the error only if you want the caller to handle it as well
@@ -76,6 +76,8 @@ export const useAuthStore = defineStore('auth', {
       } catch (error) {
         // Handle registration errors (e.g., display error messages)
         console.error(error);
+        this.message = "Failed to login. Please check your credentials and try again.";
+        this.isAuthenticated = false;
         throw error;
       }
     },
@@ -89,11 +91,11 @@ export const useAuthStore = defineStore('auth', {
 
     // Additional actions (e.g., register, check authentication status) can be added here.
 
-    setToken(token) {
+    async setToken(newToken) {
     // Update store state and localStorage
-      //this.token = token;  
-      //this.isAuthenticated = true;
-      localStorage.setItem('token', token);
+      this.token = newToken;  
+      this.isAuthenticated = !!newToken; // Update isAuthenticated based on token presence
+      localStorage.setItem('token', newToken);
     }
   },
 
