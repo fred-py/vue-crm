@@ -25,8 +25,8 @@ export const useDataStore = defineStore('DataStore', {
             // code in interceptors.js is triggered automatically when calling axios.get
             //const response = await axios.get('https://www.wheeliewash.au/api/v1/customers/');
             const response = await axios.get('http://localhost:5000/api/v1/customers/');
-            console.log(response)
-            console.log(response.headers)
+            //console.log(response)
+            //console.log(response.headers)
             // Set the data to the store
             this.customers = response.data;
         },
